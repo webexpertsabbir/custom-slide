@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Show Sections</title>
+    <style>
+    .toggle-section1{
+    display: none;
+    }
+    .active-section{
+    display: block;
+    }
+    .active-color{
+    color: red;
+    padding:25px;
+    }
+    </style>
+</head>
+<body>
+    <button class="toggle-button1">Button 1</button>
+    <button class="toggle-button1">Button 2</button>
+    <button class="toggle-button1">Button 3</button>
+    <button class="toggle-button1">Button 4</button>
+
+    <section class="toggle-section1 active-section">Section 1</section>
+    <section class="toggle-section1">Section 2</section>
+    <section class="toggle-section1">Section 3</section>
+    <section class="toggle-section1">Section 4</section>
+
+    <button class="toggle-prev">Prev</button>
+    <button class="toggle-next">Next</button>
+
+    <script>
+const buttons = document.querySelectorAll('.toggle-button1');
+const sections = document.querySelectorAll('.toggle-section1');
+const prevButton = document.querySelector('.toggle-prev');
+const nextButton = document.querySelector('.toggle-next');
+let currentSectionIndex = 0;
+
+// Function to update the active-color class for buttons
+function updateActiveButton() {
+    buttons.forEach((button, index) => {
+        if (index === currentSectionIndex) {
+            button.classList.add('active-color');
+        } else {
+            button.classList.remove('active-color');
+        }
+    });
+}
+
+buttons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        // Show the corresponding section for the clicked button
+        showSection(index);
+    });
+});
+
+prevButton.addEventListener('click', () => {
+    // Show the previous section
+    showSection(currentSectionIndex - 1);
+});
+
+nextButton.addEventListener('click', () => {
+    // Show the next section
+    showSection(currentSectionIndex + 1);
+});
+
+function showSection(index) {
+    // Hide all sections
+    sections.forEach(section => {
+        section.style.display = 'none';
+    });
+
+    // Ensure the index is within bounds
+    if (index < 0) {
+        index = 0;
+    } else if (index >= sections.length) {
+        index = sections.length - 1;
+    }
+
+    // Show the section at the specified index
+    sections[index].style.display = 'block';
+    currentSectionIndex = index;
+
+    // Update the active-color class for buttons
+    updateActiveButton();
+}
+
+// Initial update of active-color class
+updateActiveButton();
+
+
+    </script>
+</body>
+</html>
